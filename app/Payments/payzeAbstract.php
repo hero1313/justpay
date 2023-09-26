@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Payments;
+
+use App\Events\OrderReceived;
+use App\Events\OrderRejected;
+
+use App\Models\Order;
+use Exception;
+
+abstract class payzeAbstract {
+    protected $config;
+    protected Int $payment_type;
+
+    public function __construct(Object $config) {
+        
+        
+        $this->validateConfig($config);
+        $this->config = $config;
+        $this->prepare();
+    }
+
+    protected abstract function validateConfig(Object $config) : void;
+    protected abstract function prepare() : void;
+
+    public abstract function pay(Object $args) : Object;
+    public abstract function refund(Object $args) : void;
+    public abstract function get(Object $args) : Object;
+
+}
